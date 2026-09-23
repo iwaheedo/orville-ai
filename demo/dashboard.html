@@ -1746,7 +1746,11 @@ function setBannerLive() {
   if (link) link.addEventListener('click', openDrivers);
 }
 
+function escHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 function setBannerEditing(name, count) {
+  name = escHtml(name);
   banner.innerHTML = `
     <div class="ico-warn">
       <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-1 7-7-2-2-7 7-1 3z"/></svg>
@@ -1763,6 +1767,7 @@ function setBannerEditing(name, count) {
 }
 
 function setBannerResult(name, count) {
+  name = escHtml(name);
   banner.innerHTML = `
     <div class="ico-warn">
       <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3 3 7-7"/></svg>

@@ -1,0 +1,217 @@
+{
+  "site": {
+    "name": "Orville AI",
+    "contact_email": "waheed@empasco.com",
+    "email_subject": "Orville AI — demo request"
+  },
+  "buttons": {
+    "book_demo": "Book a demo",
+    "live_demo_nav": "Live demo",
+    "live_demo": "Try the live demo"
+  },
+  "hero": {
+    "eyebrow": "DISRUPTION INTELLIGENCE PLATFORM · AIRLINE OPERATIONS",
+    "title": "When the airspace closes, know exactly what to cancel.",
+    "sub_brand": "Orville",
+    "sub_main": "fuses the flood of disruption signals — airspace closures, weather, geopolitics — into a single decision: the exact flights to cancel to protect your on-time performance.",
+    "sub_bold": "No integration. Live in days.",
+    "trust_badges": [
+      "GDPR",
+      "EASA-AWARE",
+      "HUMAN-IN-THE-LOOP"
+    ]
+  },
+  "why_now": {
+    "eyebrow": "WHY NOW",
+    "title": "The world is becoming harder to operate in.",
+    "sub": "Conflict, geopolitics and drones now close airspace without warning — and the warning signs arrive as scattered, unreadable signals across Eurocontrol alerts, NOTAMs, TAFs and live tracks.",
+    "stats": [
+      {
+        "num": "€3.8B",
+        "cap": "2025 forecast cost of European airspace-related (ATFM) delay to airlines."
+      },
+      {
+        "num": "+83%",
+        "cap": "Growth in ATFM delay since 2015 — rising far faster than traffic."
+      },
+      {
+        "num": "192",
+        "cap": "Drone-related airport disturbances logged by Germany's DFS in 2025 — roughly three a day."
+      },
+      {
+        "num": "$4.50",
+        "cap": "Net profit per passenger. One mishandled day erases the margin on tens of thousands of passengers."
+      }
+    ],
+    "sources": "Sources: Eurocontrol (PRR 2024 + 2025 forecast) · IATA 2026 · DFS / Euronews 2025."
+  },
+  "problem": {
+    "eyebrow": "THE PROBLEM",
+    "title": "One closure unravels the entire day.",
+    "sub": "A sector shuts at 06:00; by 18:32 the damage has compounded through the bank — and the window to respond is minutes.",
+    "cascade": [
+      {
+        "idx": "01 · Airspace closure",
+        "title": "Sector shuts",
+        "desc": "06:00–11:00 UTC, surfaced in a flood of raw alerts."
+      },
+      {
+        "idx": "02 · Delays propagate",
+        "title": "+98 min added",
+        "desc": "Non-linear knock-on across the whole bank."
+      },
+      {
+        "idx": "03 · OTP collapses",
+        "title": "−8pp → 71%",
+        "desc": "Expected day on-time performance falls off a cliff."
+      },
+      {
+        "idx": "04 · Curfew · diversion",
+        "title": "3 misses · 4 at risk",
+        "desc": "Curfew breaches and diversion-risk flights stack up."
+      },
+      {
+        "idx": "05 · Rotations break",
+        "title": "Crews hit limits",
+        "desc": "Duty-time limits bite; aircraft end up out of position."
+      },
+      {
+        "idx": "06 · Multi-day recovery",
+        "title": "Cost compounds",
+        "desc": "The damage spills into tomorrow — and the day after."
+      }
+    ],
+    "gap_label": "The gap:",
+    "gap_before": "today this is a manual judgment call. No one can reliably say",
+    "gap_quote": "\"cancel N flights → hold X% OTP\"",
+    "gap_after": "before the bank departs."
+  },
+  "solution": {
+    "eyebrow": "THE SOLUTION",
+    "title": "Orville is the disruption intelligence platform.",
+    "sub": "It fuses every disruption signal into one tool — and tells you exactly what to do to protect your operation.",
+    "cards": [
+      {
+        "step": "01 · FORECAST",
+        "title": "See the day before it happens",
+        "desc": "Fuses Eurocontrol, Met Office and live signals into an airline-specific OTP forecast — with prediction intervals, not point guesses."
+      },
+      {
+        "step": "02 · SHAPE",
+        "title": "Get the exact intervention",
+        "desc": "Returns the exact number and the specific flights to cancel to hold your OTP target — a ranked, ready-to-action list."
+      },
+      {
+        "step": "03 · PROVE",
+        "title": "Act with confidence",
+        "desc": "Shows the before / after counterfactual so you can defend the call — and brief the floor in one click."
+      }
+    ],
+    "aside_bold": "Sits alongside your existing tools",
+    "aside_tail": "— NetLine/Ops, Movement Manager, AIMS, iFlight. Orville advises; your team decides and acts. No write-back, no automated cancellation."
+  },
+  "how": {
+    "eyebrow": "HOW IT WORKS · PLUG-AND-PLAY",
+    "title": "Two inputs. No integration. Live in days.",
+    "sub": "You don't connect Orville to your systems. You give it two things — it runs the rest.",
+    "steps": [
+      {
+        "k": "01 · You provide",
+        "title": "Two inputs",
+        "desc": "Your nominations list — the flights that matter most — and your OTP targets. That's the whole setup."
+      },
+      {
+        "k": "02 · Closure triggers",
+        "title": "Alert fires",
+        "desc": "An airspace closure fires. Orville picks it up automatically and reads the affected sectors and window."
+      },
+      {
+        "k": "03 · Orville simulates",
+        "title": "Seconds, not hours",
+        "desc": "It simulates the entire operation — every airline, every rotation — under the new airspace, in seconds."
+      },
+      {
+        "k": "04 · You get the call",
+        "title": "Ranked and ready",
+        "desc": "The exact number and the specific flights to cancel to hit your OTP targets — ranked and ready."
+      }
+    ],
+    "aside_bold": "No data plumbing.",
+    "aside_tail": "No deep integration with airline or airport systems. A pilot goes live in days, not quarters — and Orville simulates every carrier's operation, not just yours."
+  },
+  "payoff": {
+    "eyebrow": "THE PAYOFF",
+    "title": "From melt-down to managed day.",
+    "sub": "The same closure, two futures — quantified before you commit a single cancellation.",
+    "sim_head": "SIM · Do nothing",
+    "opt_head": "OPT · Orville intervention",
+    "sim_rows": [
+      {
+        "label": "Day OTP",
+        "value": "71%"
+      },
+      {
+        "label": "Total delay-min",
+        "value": "412"
+      },
+      {
+        "label": "Curfew misses",
+        "value": "3"
+      },
+      {
+        "label": "Diversion-risk",
+        "value": "4 flights"
+      }
+    ],
+    "opt_rows": [
+      {
+        "label": "Day OTP",
+        "value": "80%"
+      },
+      {
+        "label": "Total delay-min",
+        "value": "124"
+      },
+      {
+        "label": "Curfew misses",
+        "value": "0"
+      },
+      {
+        "label": "Diversion-risk",
+        "value": "1 flight"
+      }
+    ],
+    "lever_label": "The lever:",
+    "lever_tail": "8 targeted cancellations in a 4-hour window turn a melt-down into a managed day — and you see it before you commit."
+  },
+  "team": {
+    "eyebrow": "TEAM",
+    "title": "Operators and builders who have lived this problem.",
+    "sub": "Founder–market fit: aviation operations, data science and strategy — built by people who have run and advised this exact problem.",
+    "founders": [
+      {
+        "initials": "WN",
+        "name": "Waheed Nabeel",
+        "role": "Co-founder · Product & Commercial",
+        "bio": "12+ years across McKinsey, KPMG and British Airways — strategy, operations and product at the sharp end of airline performance.",
+        "tags": "STRATEGY · AIRLINE OPS · 12+ YRS"
+      },
+      {
+        "initials": "HB",
+        "name": "Hocine Bourab",
+        "role": "Co-founder · Data Science",
+        "bio": "Data scientist with 15 years building forecasting and data systems across General Electric, Emirates and British Airways.",
+        "tags": "DATA SCIENCE · FORECASTING · 15 YRS"
+      }
+    ]
+  },
+  "final_cta": {
+    "title": "When the world is unpredictable, your operation doesn't have to be.",
+    "sub": "See Orville on your own network. A pilot goes live in days — no integration required."
+  },
+  "footer": {
+    "company": "Orville AI",
+    "location": "Headquartered in London",
+    "copyright": "© 2026 ORVILLE AI"
+  }
+}

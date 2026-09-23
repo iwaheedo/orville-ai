@@ -1,0 +1,158 @@
+# Pages CMS configuration — edit the site at https://app.pagescms.org
+# Sign in with GitHub, open this repo, and edit "Website copy" as a form.
+# Every save commits to main and the site redeploys automatically (~1 min).
+
+content:
+  - name: copy
+    label: Website copy
+    type: file
+    path: content.json
+    format: json
+    fields:
+      - name: site
+        label: Site basics
+        type: object
+        fields:
+          - { name: name, label: Company name, type: string }
+          - { name: contact_email, label: Contact email (all "Book a demo" buttons), type: string }
+          - { name: email_subject, label: Email subject line, type: string }
+      - name: buttons
+        label: Buttons
+        type: object
+        fields:
+          - { name: book_demo, label: Primary button text, type: string }
+          - { name: live_demo_nav, label: Nav demo button, type: string }
+          - { name: live_demo, label: Demo button (with arrow), type: string }
+      - name: hero
+        label: Hero (top of page)
+        type: object
+        fields:
+          - { name: eyebrow, label: Small line above headline, type: string }
+          - { name: title, label: Headline, type: text }
+          - { name: sub_brand, label: Subtitle — bold brand word, type: string }
+          - { name: sub_main, label: Subtitle — main text, type: text }
+          - { name: sub_bold, label: Subtitle — bold ending, type: string }
+          - { name: trust_badges, label: Trust badges, type: string, list: true }
+      - name: why_now
+        label: "Section: Why now"
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: title, label: Title, type: text }
+          - { name: sub, label: Subtitle, type: text }
+          - name: stats
+            label: Stat tiles (4)
+            type: object
+            list: { min: 4, max: 4 }
+            fields:
+              - { name: num, label: Big number, type: string }
+              - { name: cap, label: Caption, type: text }
+          - { name: sources, label: Sources line, type: text }
+      - name: problem
+        label: "Section: The problem"
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: title, label: Title, type: text }
+          - { name: sub, label: Subtitle, type: text }
+          - name: cascade
+            label: Cascade cards (6)
+            type: object
+            list: { min: 6, max: 6 }
+            fields:
+              - { name: idx, label: Step label, type: string }
+              - { name: title, label: Card title, type: string }
+              - { name: desc, label: Card text, type: text }
+          - { name: gap_label, label: Gap box — bold label, type: string }
+          - { name: gap_before, label: Gap box — text before quote, type: text }
+          - { name: gap_quote, label: Gap box — monospace quote, type: string }
+          - { name: gap_after, label: Gap box — text after quote, type: string }
+      - name: solution
+        label: "Section: The solution"
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: title, label: Title, type: text }
+          - { name: sub, label: Subtitle, type: text }
+          - name: cards
+            label: Feature cards (3)
+            type: object
+            list: { min: 3, max: 3 }
+            fields:
+              - { name: step, label: Step label, type: string }
+              - { name: title, label: Card title, type: string }
+              - { name: desc, label: Card text, type: text }
+          - { name: aside_bold, label: Note under cards — bold part, type: string }
+          - { name: aside_tail, label: Note under cards — rest, type: text }
+      - name: how
+        label: "Section: How it works"
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: title, label: Title, type: text }
+          - { name: sub, label: Subtitle, type: text }
+          - name: steps
+            label: Steps (4)
+            type: object
+            list: { min: 4, max: 4 }
+            fields:
+              - { name: k, label: Step label, type: string }
+              - { name: title, label: Step title, type: string }
+              - { name: desc, label: Step text, type: text }
+          - { name: aside_bold, label: Note under steps — bold part, type: string }
+          - { name: aside_tail, label: Note under steps — rest, type: text }
+      - name: payoff
+        label: "Section: The payoff"
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: title, label: Title, type: text }
+          - { name: sub, label: Subtitle, type: text }
+          - { name: sim_head, label: Left column header, type: string }
+          - { name: opt_head, label: Right column header, type: string }
+          - name: sim_rows
+            label: Left column rows (4)
+            type: object
+            list: { min: 4, max: 4 }
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: value, label: Value, type: string }
+          - name: opt_rows
+            label: Right column rows (4)
+            type: object
+            list: { min: 4, max: 4 }
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: value, label: Value, type: string }
+          - { name: lever_label, label: Lever note — bold label, type: string }
+          - { name: lever_tail, label: Lever note — rest, type: text }
+      - name: team
+        label: "Section: Team"
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: title, label: Title, type: text }
+          - { name: sub, label: Subtitle, type: text }
+          - name: founders
+            label: Founders (2)
+            type: object
+            list: { min: 2, max: 2 }
+            fields:
+              - { name: initials, label: Initials (avatar), type: string }
+              - { name: name, label: Name, type: string }
+              - { name: role, label: Role, type: string }
+              - { name: bio, label: Bio, type: text }
+              - { name: tags, label: Tag line, type: string }
+      - name: final_cta
+        label: "Section: Final call-to-action"
+        type: object
+        fields:
+          - { name: title, label: Title, type: text }
+          - { name: sub, label: Subtitle, type: text }
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - { name: company, label: Company name, type: string }
+          - { name: location, label: Location line, type: string }
+          - { name: copyright, label: Copyright line, type: string }
