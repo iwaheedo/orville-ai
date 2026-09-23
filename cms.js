@@ -138,7 +138,6 @@
       var href = "mailto:" + email + (subject ? "?subject=" + encodeURIComponent(subject) : "");
       document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
         a.setAttribute("href", href);
-        if (a.classList.contains("foot-email")) a.textContent = email;
       });
     }
 
