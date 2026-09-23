@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orville · Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbfbfa;
+  --bg-elev: #ffffff;
+  --bg-sunken: #f5f5f4;
+  --bg-hover: #f0f0ee;
+  --line: #ebebe9;
+  --line-strong: #dcdcd9;
+  --line-soft: #f2f2f0;
+  --fg: #0a0a0a;
+  --fg-2: #3a3a38;
+  --fg-3: #6b6b68;
+  --fg-4: #9a9a96;
+  --fg-5: #b8b8b4;
+  --accent: #0a0a0a;
+  --accent-fg: #ffffff;
+  --accent-hover: #1f1f1f;
+  --good: #16a34a;
+  --info: #2563eb;
+  --bad: #dc2626;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font-sans: "Inter Tight", "SF Pro Text", -apple-system, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --nav-h: 52px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--fg);
+  background: var(--bg);
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Topbar (slim) */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  height: var(--nav-h);
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 5;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.brand-mark {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  display: grid; place-items: center;
+  font-weight: 600; font-size: 12px;
+}
+.brand-name { font-size: 14.5px; }
+.brand-sep { color: var(--fg-5); margin: 0 2px; }
+.brand-tenant { color: var(--fg-3); font-size: 13px; font-weight: 450; }
+.crumbs {
+  font-size: 13px;
+  color: var(--fg-3);
+}
+.crumbs a {
+  color: var(--fg-2);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.crumbs a:hover { border-bottom-color: var(--fg-4); }
+.crumbs .sep { color: var(--fg-5); margin: 0 6px; }
+.crumbs .here { color: var(--fg); font-weight: 500; }
+.spacer { flex: 1; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  color: var(--fg);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 120ms, border-color 120ms;
+}
+.btn:hover { background: var(--bg-hover); border-color: #c8c8c5; }
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.ghost:hover { background: var(--bg-hover); }
+.btn.icon { width: 30px; padding: 0; }
+.btn.sm { height: 26px; padding: 0 10px; font-size: 12px; }
+.btn .icn { width: 14px; height: 14px; }
+
+.avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2a2a2a, #555);
+  color: white;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 600;
+}
+
+/* Page */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 28px 80px;
+}
+.page-head {
+  margin-bottom: 28px;
+}
+.page-head h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.page-head .lede {
+  color: var(--fg-3);
+  font-size: 14px;
+  max-width: 720px;
+}
+
+/* Setup cards */
+.cards {
+  display: grid;
+  gap: 16px;
+}
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.card-head {
+  padding: 18px 22px 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.card-head .num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  color: var(--fg-3);
+  font-size: 11px; font-weight: 600;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+.card-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.card-head .help {
+  color: var(--fg-3);
+  font-size: 13px;
+  flex: 1;
+}
+.card-body {
+  padding: 4px 22px 22px;
+}
+
+/* Hubs list */
+.hubs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.hub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--fg);
+}
+.hub-pill.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.hub-pill .x {
+  border: none;
+  background: transparent;
+  color: currentColor;
+  opacity: 0.55;
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 14px;
+  line-height: 1;
+}
+.hub-pill .x:hover { opacity: 1; }
+.hub-pill .star { color: var(--accent-fg); font-size: 11px; }
+.add-hub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  background: var(--bg-elev);
+  border: 1px dashed var(--line-strong);
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: var(--fg-3);
+  cursor: pointer;
+  font-family: inherit;
+}
+.add-hub:hover { border-color: var(--fg-3); color: var(--fg); }
+
+/* Fleet */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 4px;
+}
+.tbl th {
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-4);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.tbl th.num, .tbl td.num { text-align: right; font-family: var(--font-mono); }
+.tbl td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--fg-2);
+}
+.tbl tr:last-child td { border-bottom: none; }
+.tbl td .type-id {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--fg);
+}
+.tbl td .type-name {
+  color: var(--fg-3);
+  font-size: 12.5px;
+  margin-left: 8px;
+}
+.tbl td .pill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 7px;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  color: var(--fg-3);
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+.tbl-foot {
+  padding: 12px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-sunken);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--fg-3);
+}
+.tbl-foot .grow { flex: 1; }
+.note {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--bg-sunken);
+  border-left: 3px solid var(--info);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--fg-2);
+  line-height: 1.5;
+}
+
+/* Upload */
+.uploader {
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  padding: 22px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-sunken);
+}
+.uploader .left {
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  display: grid; place-items: center;
+  color: var(--fg-2);
+  flex-shrink: 0;
+}
+.uploader .meta { flex: 1; }
+.uploader .meta .ttl { font-weight: 500; color: var(--fg); margin-bottom: 2px; }
+.uploader .meta .sub { font-size: 12px; color: var(--fg-3); }
+.uploader .actions { display: flex; gap: 6px; }
+
+.preview {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.preview-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-sunken);
+  border-bottom: 1px solid var(--line);
+  font-size: 11.5px;
+  color: var(--fg-3);
+  font-family: var(--font-mono);
+}
+.preview-head .row-count { margin-left: auto; }
+.preview-tbl { width: 100%; border-collapse: collapse; font-size: 12px; font-family: var(--font-mono); }
+.preview-tbl th, .preview-tbl td {
+  padding: 6px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line-soft);
+}
+.preview-tbl th {
+  background: var(--bg-elev);
+  color: var(--fg-3);
+  font-weight: 600;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.preview-tbl td.num { text-align: right; }
+.preview-tbl tbody tr:last-child td { border-bottom: none; }
+
+.template-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--fg-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+}
+.template-link:hover { color: var(--fg); border-color: var(--fg-3); }
+
+/* Save bar */
+.savebar {
+  position: sticky; bottom: 0;
+  background: var(--bg-elev);
+  border-top: 1px solid var(--line);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.03);
+}
+.savebar .meta {
+  font-size: 12px;
+  color: var(--fg-3);
+}
+.savebar .meta .dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--fg-4);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">O</div>
+    <span class="brand-name">Orville</span>
+    <span class="brand-sep">·</span>
+    <span class="brand-tenant">Virgin Atlantic</span>
+  </div>
+  <span class="brand-sep" style="margin: 0 6px;">/</span>
+  <div class="crumbs">
+    <a href="dashboard.html">Dashboard</a>
+    <span class="sep">/</span>
+    <span class="here">Setup</span>
+  </div>
+  <span class="spacer"></span>
+  <a class="btn" href="dashboard.html">
+    <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3l-4 5 4 5"/></svg>
+    Back to dashboard
+  </a>
+  <div class="avatar">HC</div>
+</header>
+
+<main class="page">
+
+  <div class="page-head">
+    <h1>Setup</h1>
+    <p class="lede">
+      Three inputs Orville needs to model your network. All persistent — change rarely. Schedule data is pulled from public flight-tracking feeds; you don't upload it here.
+    </p>
+  </div>
+
+  <div class="cards">
+
+    <!-- 1. HUBS & BASES -->
+    <section class="card">
+      <div class="card-head">
+        <div class="num">1</div>
+        <h2>Hubs &amp; bases</h2>
+        <span class="help">Your network anchors. Drives map default zoom, what counts as "home", and rotation cascade weights.</span>
+      </div>
+      <div class="card-body">
+        <div class="hubs">
+          <span class="hub-pill primary"><span class="star">★</span>LHR<button class="x" title="Remove">×</button></span>
+          <span class="hub-pill primary"><span class="star">★</span>MAN<button class="x" title="Remove">×</button></span>
+          <span class="hub-pill">LGW<button class="x" title="Remove">×</button></span>
+          <span class="hub-pill">EDI<button class="x" title="Remove">×</button></span>
+          <span class="hub-pill">BHX<button class="x" title="Remove">×</button></span>
+          <button class="add-hub">＋ Add airport (IATA)</button>
+        </div>
+        <div class="note">
+          <strong>★ Primary hub</strong> — used as the network centre on the map and as the default view in the dashboard. You can have more than one (e.g. LHR + MAN).
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. AIRCRAFT FLEET -->
+    <section class="card">
+      <div class="card-head">
+        <div class="num">2</div>
+        <h2>Aircraft fleet</h2>
+        <span class="help">Tail counts by type. Orville maps each type to wake category, cruise speed, and range internally — you don't manage those.</span>
+      </div>
+      <div class="card-body">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Wake</th>
+              <th class="num">Tails</th>
+              <th class="num">Last update</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="type-id">B789</span><span class="type-name">Boeing 787-9</span></td>
+              <td><span class="pill">Heavy</span></td>
+              <td class="num">17</td>
+              <td class="num" style="color: var(--fg-3);">2026-04-22</td>
+              <td><button class="btn ghost sm" title="Edit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><span class="type-id">A35K</span><span class="type-name">Airbus A350-1000</span></td>
+              <td><span class="pill">Heavy</span></td>
+              <td class="num">12</td>
+              <td class="num" style="color: var(--fg-3);">2026-03-10</td>
+              <td><button class="btn ghost sm" title="Edit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><span class="type-id">A333</span><span class="type-name">Airbus A330-300</span></td>
+              <td><span class="pill">Heavy</span></td>
+              <td class="num">10</td>
+              <td class="num" style="color: var(--fg-3);">2026-02-18</td>
+              <td><button class="btn ghost sm" title="Edit">Edit</button></td>
+            </tr>
+            <tr>
+              <td><span class="type-id">A339</span><span class="type-name">Airbus A330-900neo</span></td>
+              <td><span class="pill">Heavy</span></td>
+              <td class="num">7</td>
+              <td class="num" style="color: var(--fg-3);">2026-04-22</td>
+              <td><button class="btn ghost sm" title="Edit">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tbl-foot">
+          <span><strong>46</strong> tails across 4 types</span>
+          <span class="grow"></span>
+          <button class="btn sm">＋ Add type</button>
+          <button class="btn sm">Import fleet CSV</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. FLIGHT SCORING TABLE -->
+    <section class="card">
+      <div class="card-head">
+        <div class="num">3</div>
+        <h2>Flight scoring table</h2>
+        <span class="help">Per-flight score the optimiser uses to rank cancellation candidates. You compute the score with your own logic (yield, pax, codeshares, crew). Orville does not host or evaluate that logic.</span>
+      </div>
+      <div class="card-body">
+
+        <div class="uploader">
+          <div class="left">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h10 M8 3v8 M5 6l3-3 3 3"/></svg>
+          </div>
+          <div class="meta">
+            <div class="ttl">Last upload: <span style="font-family: var(--font-mono);">scores_2026-05-09.csv</span></div>
+            <div class="sub">540 rows · uploaded 2026-05-09 14:08 UTC by hocine.bouarab@opsdecisions.ai</div>
+          </div>
+          <div class="actions">
+            <a class="template-link" href="#">Download template</a>
+            <button class="btn primary sm">↑ Upload new</button>
+          </div>
+        </div>
+
+        <div class="preview">
+          <div class="preview-head">
+            <span>Preview · first 6 rows</span>
+            <span class="row-count">540 rows total</span>
+          </div>
+          <table class="preview-tbl">
+            <thead>
+              <tr><th>flight_id</th><th>route</th><th>std</th><th class="num">score</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>VS101</td><td>MAN→FCO</td><td>11:35</td><td class="num">0.18</td></tr>
+              <tr><td>VS105</td><td>LHR→AMS</td><td>11:07</td><td class="num">0.22</td></tr>
+              <tr><td>VS107</td><td>MAN→IAD</td><td>11:15</td><td class="num">0.91</td></tr>
+              <tr><td>VS108</td><td>LHR→MIA</td><td>12:20</td><td class="num">0.88</td></tr>
+              <tr><td>VS110</td><td>LHR→FCO</td><td>09:30</td><td class="num">0.24</td></tr>
+              <tr><td>VS113</td><td>LHR→DEL</td><td>09:33</td><td class="num">0.95</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note">
+          <strong>How it's used:</strong> the optimiser orders affected flights by ascending score when shaping the cancellation nomination set. Lower-scored flights are preferred candidates. Your scoring logic is the single input — Orville does not see yield, pax, crew or other underlying factors.
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+</main>
+
+<div class="savebar">
+  <span class="meta"><span class="dot"></span>No unsaved changes · last saved 2026-05-09 14:08 UTC</span>
+  <span class="spacer" style="flex:1;"></span>
+  <a class="btn" href="dashboard.html">Cancel</a>
+  <button class="btn primary">Save changes</button>
+</div>
+
+</body>
+</html>

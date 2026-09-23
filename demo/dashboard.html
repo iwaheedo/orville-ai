@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orville · Day of Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbfbfa;
+  --bg-elev: #ffffff;
+  --bg-sunken: #f5f5f4;
+  --bg-hover: #f0f0ee;
+  --bg-active: #e8e8e6;
+  --line: #ebebe9;
+  --line-strong: #dcdcd9;
+  --line-soft: #f2f2f0;
+
+  --fg: #0a0a0a;
+  --fg-2: #3a3a38;
+  --fg-3: #6b6b68;
+  --fg-4: #9a9a96;
+  --fg-5: #b8b8b4;
+
+  --accent: #0a0a0a;
+  --accent-fg: #ffffff;
+  --accent-hover: #1f1f1f;
+
+  --sev-0: #6cbf80;
+  --sev-1: #f5b94a;
+  --sev-2: #ec8a3a;
+  --sev-3: #d94a3a;
+  --sev-4: #8a2a26;
+  --sev-1-soft: rgba(245,185,74,0.18);
+  --sev-2-soft: rgba(236,138,58,0.20);
+  --sev-3-soft: rgba(217,74,58,0.20);
+
+  --hi: #fff7ed;
+  --hi-strong: #d97706;
+  --hi-line: #fde0b8;
+
+  --good: #16a34a;
+  --bad: #dc2626;
+  --info: #2563eb;
+
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --r-xl: 14px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-pop: 0 24px 60px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.06);
+
+  --font-sans: "Inter Tight", "SF Pro Text", -apple-system, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --nav-h: 52px;
+  --banner-h: 48px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--fg);
+  background: var(--bg);
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------- App shell ---------------- */
+.app {
+  display: grid;
+  grid-template-rows: var(--nav-h) auto auto auto 1fr;
+  height: 100vh;
+  min-height: 760px;
+}
+
+/* ---------------- Topbar ---------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-elev);
+  height: var(--nav-h);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.brand-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+.brand-name { font-size: 14.5px; }
+.brand-sep { color: var(--fg-5); margin: 0 2px; }
+.brand-tenant { color: var(--fg-3); font-size: 13px; font-weight: 450; }
+
+.spacer { flex: 1; }
+
+.seg {
+  display: inline-flex;
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 2px;
+  gap: 0;
+}
+.seg button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: var(--fg-3);
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: background 100ms, color 100ms;
+}
+.seg button:hover { color: var(--fg-2); }
+.seg button.active {
+  background: var(--bg-elev);
+  color: var(--fg);
+  box-shadow: var(--shadow-sm);
+}
+
+.chips { display: inline-flex; gap: 6px; align-items: center; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  color: var(--fg-3);
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+.chip .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 0 2px rgba(22,163,74,0.18);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  color: var(--fg);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 120ms, border-color 120ms;
+}
+.btn:hover { background: var(--bg-hover); border-color: #c8c8c5; }
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.ghost:hover { background: var(--bg-hover); }
+.btn.icon { width: 30px; padding: 0; }
+.btn.sm { height: 26px; padding: 0 8px; font-size: 12px; }
+.btn .icn { width: 14px; height: 14px; flex-shrink: 0; }
+
+.avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2a2a2a, #555);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ---------------- Alert banner ---------------- */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: var(--banner-h);
+  background: var(--hi);
+  border-bottom: 1px solid var(--hi-line);
+  color: var(--fg-2);
+  font-size: 13px;
+}
+.banner .ico-warn {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--hi-strong);
+  color: white;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700;
+  flex-shrink: 0;
+}
+.banner b { color: var(--fg); font-weight: 600; letter-spacing: -0.005em; }
+.banner .delta {
+  font-family: var(--font-mono);
+  color: var(--sev-3);
+  font-weight: 500;
+}
+.banner .ts {
+  font-family: var(--font-mono);
+  color: var(--fg-3);
+  font-size: 11.5px;
+}
+.banner a {
+  color: var(--fg-2);
+  font-size: 12px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+}
+.banner a:hover { color: var(--fg); border-color: var(--fg-3); }
+
+/* ---------------- KPI strip ---------------- */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: 232px repeat(5, 1fr);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+.kpi-strip > * {
+  padding: 12px 16px;
+  border-right: 1px solid var(--line);
+}
+.kpi-strip > *:last-child { border-right: none; }
+.kpi-head {
+  background: var(--bg-sunken);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.kpi-head .h-title {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-4);
+}
+.kpi-head .h-sub {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  margin-top: 2px;
+}
+.kpi-head .h-meta {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: var(--fg-3);
+}
+.kpi-head .h-meta .arrow { font-family: var(--font-mono); color: var(--fg-4); }
+.kpi {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.kpi .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  color: var(--fg-4);
+}
+.kpi .vals {
+  display: flex; align-items: baseline; gap: 8px;
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+}
+.kpi .v-before {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--fg-4);
+  text-decoration: line-through;
+  text-decoration-color: var(--fg-5);
+  text-decoration-thickness: 1px;
+}
+.kpi .arrow { color: var(--fg-5); font-size: 14px; }
+.kpi .v-after {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+.kpi.is-cost .v-before { text-decoration: none; color: var(--fg-3); }
+.kpi.is-cost .v-after { color: var(--hi-strong); }
+.kpi.is-cost .label::before {
+  content: "↑ ";
+  color: var(--hi-strong);
+  font-family: var(--font-mono);
+}
+.kpi .delta {
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  color: var(--good);
+}
+.kpi.is-cost .delta { color: var(--hi-strong); }
+
+/* ---------------- Intervention card ---------------- */
+.intervention {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  background: var(--hi);
+  border-bottom: 1px solid var(--hi-line);
+}
+.intervention .body {
+  padding: 14px 18px;
+  border-right: 1px solid var(--hi-line);
+}
+.intervention .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: var(--hi-strong);
+}
+.intervention h2 {
+  margin: 4px 0 6px;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+.intervention h2 .count {
+  border-bottom: 1.5px dotted var(--hi-strong);
+  cursor: pointer;
+  color: var(--hi-strong);
+}
+.intervention h2 .count:hover { color: var(--fg); border-color: var(--fg); }
+.intervention .sub {
+  color: var(--fg-3);
+  font-size: 12.5px;
+}
+.intervention .pi {
+  font-family: var(--font-mono);
+  color: var(--fg-2);
+}
+.intervention .actions {
+  margin-top: 10px;
+  display: flex; gap: 6px; align-items: center;
+}
+.intervention .cta {
+  padding: 14px 18px;
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+}
+.intervention .cta-meta { color: var(--fg-3); font-size: 11.5px; }
+
+/* ---------------- Canvas ---------------- */
+.canvas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 320px;
+  min-height: 0;
+  overflow: hidden;
+}
+.canvas > section {
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg-elev);
+}
+.canvas > section:last-child { border-right: none; }
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-elev);
+  flex-shrink: 0;
+}
+.section-head h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-3);
+}
+.section-head .count-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 19px;
+  padding: 0 7px;
+  background: var(--bg-sunken);
+  color: var(--fg-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+.section-head .ftools { display: inline-flex; gap: 4px; align-items: center; }
+
+/* ---------------- Map ---------------- */
+.map-wrap {
+  position: relative;
+  flex: 1;
+  background: #eceae4;
+  overflow: hidden;
+}
+.map-svg { width: 100%; height: 100%; display: block; }
+.country {
+  fill: #d8d6cf;
+  stroke: rgba(0,0,0,0.06);
+  stroke-width: 0.4;
+}
+.fir {
+  fill: none;
+  stroke: rgba(28,28,28,0.18);
+  stroke-width: 0.6;
+  stroke-dasharray: 2 3;
+}
+.airspace {
+  fill-opacity: 0.18;
+  stroke-width: 0.8;
+  stroke-opacity: 0.55;
+  stroke-dasharray: 0.6 1.2;
+  cursor: pointer;
+  transition: all 220ms;
+}
+.airspace.sev-1 { fill: var(--sev-1); stroke: var(--sev-1); }
+.airspace.sev-2 { fill: var(--sev-2); stroke: var(--sev-2); }
+.airspace.sev-3 { fill: var(--sev-3); stroke: var(--sev-3); fill-opacity: 0.22; }
+.airspace.closed { fill: url(#hatch); stroke: #1c1c1c; fill-opacity: 1; stroke-opacity: 0.85; stroke-width: 1.2; stroke-dasharray: 2 2; }
+.airspace:hover { fill-opacity: 0.42; }
+
+.fir-label {
+  fill: var(--fg-3);
+  font-size: 9.5px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  paint-order: stroke;
+  stroke: #eceae4;
+  stroke-width: 2.5;
+  pointer-events: none;
+}
+.flight-path { fill: none; stroke: rgba(20,20,20,0.5); stroke-width: 0.6; stroke-linecap: round; }
+.flight-path.affected { stroke: var(--sev-3); stroke-width: 0.9; }
+
+.airport { fill: var(--fg); }
+.airport.hub { fill: var(--accent); }
+.airport-label {
+  fill: var(--fg-2);
+  font-size: 8.5px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  paint-order: stroke;
+  stroke: #fbfbfa;
+  stroke-width: 2.5;
+  pointer-events: none;
+}
+
+.map-legend {
+  position: absolute;
+  left: 12px; bottom: 12px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 8px 10px;
+  font-size: 11px;
+  box-shadow: var(--shadow-sm);
+  display: flex; gap: 12px;
+  align-items: center;
+  color: var(--fg-2);
+}
+.map-legend .swatch { display: inline-flex; align-items: center; gap: 5px; }
+.map-legend .swatch::before {
+  content: ""; display: inline-block; width: 10px; height: 10px;
+  border-radius: 2px;
+}
+.map-legend .swatch.s1::before { background: var(--sev-1); }
+.map-legend .swatch.s2::before { background: var(--sev-2); }
+.map-legend .swatch.s3::before { background: var(--sev-3); }
+.map-legend .swatch.closed::before { background: #1c1c1c; }
+
+.map-controls {
+  position: absolute;
+  top: 12px; right: 12px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.map-ctl-group {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.map-ctl-group button {
+  border: none;
+  background: transparent;
+  width: 28px; height: 28px;
+  cursor: pointer;
+  color: var(--fg-2);
+  display: grid; place-items: center;
+}
+.map-ctl-group button + button { border-top: 1px solid var(--line); }
+.map-ctl-group button:hover { background: var(--bg-hover); }
+
+/* ---------------- Flight table ---------------- */
+.tbl-wrap { flex: 1; overflow: auto; }
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.tbl thead th {
+  position: sticky; top: 0;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-4);
+  padding: 8px 10px;
+  z-index: 1;
+}
+.tbl thead th.num { text-align: right; }
+.tbl tbody td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--fg-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.tbl tbody td.num { text-align: right; }
+.tbl tbody tr:hover { background: var(--bg-hover); cursor: pointer; }
+.tbl tbody tr.affected td:first-child { box-shadow: inset 3px 0 0 var(--sev-3); }
+.tbl tbody tr.nominated { background: var(--hi); }
+.tbl tbody tr.nominated:hover { background: #ffeed3; }
+.tbl tbody tr.nominated td:first-child { box-shadow: inset 3px 0 0 var(--hi-strong); }
+
+.flight-id { color: var(--fg); font-weight: 600; }
+.route-arrow { color: var(--fg-4); }
+.delay-cell.sev-3 { color: var(--sev-3); font-weight: 500; }
+.delay-cell.sev-2 { color: var(--sev-2); font-weight: 500; }
+.delay-cell.sev-1 { color: var(--fg-2); }
+.delta-cell { color: var(--good); font-weight: 500; }
+.delta-cell.cxl { color: var(--fg-4); font-style: italic; }
+
+.nom-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 16px;
+  padding: 0 5px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: 3px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+}
+.nom-cell { width: 1px; }
+
+/* probability bar */
+.prob {
+  display: inline-block;
+  width: 48px;
+  height: 5px;
+  background: var(--bg-sunken);
+  border-radius: 3px;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.prob > span {
+  display: block;
+  height: 100%;
+  background: var(--fg-4);
+}
+.prob.warn > span { background: var(--sev-1); }
+.prob.bad > span { background: var(--sev-3); }
+
+/* filter row in section head */
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  color: var(--fg-3);
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+.filter-chip.active { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.filter-chip .dot-on {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor;
+}
+.sort-pill {
+  font-size: 11px; color: var(--fg-3); font-family: var(--font-mono);
+}
+
+/* ---------------- Agent rail ---------------- */
+.agent {
+  background: var(--bg-elev);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.agent .a-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.agent .a-head h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-3);
+}
+.agent .a-head .ai-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--info);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.18);
+}
+
+.agent .body {
+  flex: 1;
+  overflow: auto;
+  padding: 12px 14px;
+}
+.agent .suggest-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--fg-4);
+  margin-bottom: 8px;
+}
+.agent .suggest {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.agent .s-chip {
+  background: var(--bg-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--fg-2);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 100ms;
+}
+.agent .s-chip:hover { background: var(--bg-hover); border-color: var(--line-strong); }
+.agent .s-chip .s-arrow { float: right; color: var(--fg-4); }
+
+.agent .input-wrap {
+  border-top: 1px solid var(--line);
+  padding: 10px 12px;
+  background: var(--bg-elev);
+}
+.agent .input {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--fg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--bg-elev);
+  transition: border-color 120ms, box-shadow 120ms;
+}
+.agent .input:focus {
+  outline: none;
+  border-color: var(--fg);
+  box-shadow: 0 0 0 3px rgba(10,10,10,0.07);
+}
+.agent .input::placeholder { color: var(--fg-5); }
+
+.agent.collapsed { width: 40px; min-width: 40px; }
+.agent.collapsed .body, .agent.collapsed .input-wrap, .agent.collapsed .a-head h3,
+.agent.collapsed .a-head .ai-dot { display: none; }
+
+/* ---------------- Scenario drawer ---------------- */
+.scrim {
+  position: fixed; inset: 0;
+  background: rgba(20,20,20,0.18);
+  opacity: 0; pointer-events: none;
+  transition: opacity 180ms;
+  z-index: 50;
+}
+.scrim.open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 420px;
+  background: var(--bg-elev);
+  border-left: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-pop);
+  transform: translateX(100%);
+  transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  z-index: 60;
+}
+.drawer.open { transform: translateX(0); }
+.drawer .d-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.drawer .d-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.drawer .d-body { flex: 1; overflow: auto; padding: 18px; }
+.drawer .d-foot {
+  border-top: 1px solid var(--line);
+  padding: 14px 18px;
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.field > label {
+  font-size: 11.5px; font-weight: 500;
+  color: var(--fg-2);
+}
+.field .help { font-size: 11px; color: var(--fg-4); margin-top: -2px; }
+.input-line {
+  height: 36px;
+  padding: 0 10px;
+  font: inherit; font-size: 13px;
+  color: var(--fg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--bg-elev);
+}
+.input-line:focus { outline: none; border-color: var(--fg); box-shadow: 0 0 0 3px rgba(10,10,10,0.07); }
+
+.day-toggle { display: flex; gap: 6px; }
+.day-toggle button {
+  flex: 1;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  color: var(--fg-2);
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font: inherit; font-size: 13px; font-weight: 500;
+}
+.day-toggle button.on {
+  background: var(--accent); color: var(--accent-fg); border-color: var(--accent);
+}
+
+.closures {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-top: 8px;
+}
+.closure-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-sunken);
+  border-radius: var(--r-md);
+  font-size: 12px;
+}
+.closure-row .c-id { font-family: var(--font-mono); font-weight: 600; color: var(--fg); }
+.closure-row .c-name { color: var(--fg-3); }
+.closure-row .c-pill {
+  background: var(--accent); color: var(--accent-fg);
+  font-size: 9.5px; padding: 1px 5px; border-radius: 3px;
+  letter-spacing: 0.04em; font-weight: 600;
+}
+.closure-row .c-time {
+  font-family: var(--font-mono);
+  color: var(--fg-3);
+  font-size: 11.5px;
+  margin-left: auto;
+}
+.closure-row .c-x {
+  background: transparent; border: none; color: var(--fg-4);
+  cursor: pointer; padding: 2px;
+}
+.closure-row .c-x:hover { color: var(--fg); }
+
+.draw-row { display: flex; gap: 6px; margin-top: 8px; }
+
+.empty-closures {
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  padding: 14px;
+  text-align: center;
+  color: var(--fg-4);
+  font-size: 12px;
+  background: var(--bg-sunken);
+}
+
+/* ---------------- Drivers popover ---------------- */
+.drivers {
+  position: fixed;
+  z-index: 70;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-pop);
+  width: 520px;
+  max-width: calc(100% - 32px);
+  max-height: 80vh;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity 160ms, transform 160ms;
+}
+.drivers.open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+.drivers .d-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.drivers .d-head h2 {
+  margin: 0; font-size: 14px; font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.drivers .d-body { padding: 14px 18px; overflow: auto; }
+.driver-card {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: var(--bg-sunken);
+}
+.driver-card .src {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-3);
+  letter-spacing: 0;
+}
+.driver-card .text {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--fg);
+  margin-top: 6px;
+  white-space: pre-wrap;
+}
+
+.tag {
+  display: inline-flex; align-items: center;
+  height: 18px; padding: 0 6px;
+  font-size: 10.5px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+  margin-left: 6px;
+}
+.tag.live { background: rgba(22,163,74,0.12); color: var(--good); }
+.tag.scenario { background: rgba(37,99,235,0.12); color: var(--info); }
+
+/* ---------------- App in scenario state ---------------- */
+.app.scenario .map-svg { filter: saturate(0.55) brightness(0.97); }
+.app.scenario .map-wrap { background: #dde6f0; }
+.app.scenario .banner {
+  background: rgba(37,99,235,0.08);
+  border-bottom-color: rgba(37,99,235,0.25);
+  color: var(--fg-2);
+}
+.app.scenario .banner .ico-warn { background: var(--info); }
+.app.scenario .banner .delta { color: var(--info); }
+.app.scenario .banner b { color: var(--fg); }
+.app.scenario .intervention { background: rgba(37,99,235,0.06); border-bottom-color: rgba(37,99,235,0.18); }
+.app.scenario .intervention .label { color: var(--info); }
+.app.scenario .intervention h2 .count { color: var(--info); border-bottom-color: var(--info); }
+.app.scenario .intervention .opt-params { border-top-color: rgba(37,99,235,0.25); }
+.app.scenario .intervention .op { border-color: rgba(37,99,235,0.3); }
+.app.scenario .intervention .op-label { color: var(--info); }
+
+/* New-scenario button — active state when in scenario mode */
+#newScenarioBtn.active-scenario {
+  background: var(--info) !important;
+  border-color: var(--info) !important;
+  color: white !important;
+}
+#newScenarioBtn.active-scenario .dot-led {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
+  margin-right: 2px;
+}
+
+/* Editing mode (drawer open, before Run) — dim KPIs and intervention with "awaiting" overlay */
+.app.scenario.editing .kpi-strip > *,
+.app.scenario.editing .intervention > * {
+  opacity: 0.25;
+  filter: saturate(0.4);
+  pointer-events: none;
+  transition: opacity 220ms;
+}
+.app.scenario.editing .kpi-strip,
+.app.scenario.editing .intervention {
+  position: relative;
+}
+.app.scenario.editing .kpi-strip::after,
+.app.scenario.editing .intervention::after {
+  position: absolute;
+  inset: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  color: var(--info);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(37,99,235,0.06);
+  border: 1px dashed rgba(37,99,235,0.4);
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 2;
+  text-align: center;
+}
+.app.scenario.editing .kpi-strip::after {
+  content: "Awaiting Run · KPIs populate after you Run the scenario";
+}
+.app.scenario.editing .intervention::after {
+  content: "Recommendation pending · Run the scenario to populate";
+}
+
+/* Editing mode badge on the map section header */
+.app.scenario.editing .map-section .section-head {
+  background: rgba(37,99,235,0.06);
+  border-bottom-color: rgba(37,99,235,0.25);
+}
+.app.scenario.editing .map-section .section-head h3::after {
+  content: "Edit mode · click an FIR";
+  background: var(--info);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-left: 10px;
+  text-transform: uppercase;
+}
+
+/* Editing mode dims the flight table slightly */
+.app.scenario.editing .tbl-wrap {
+  opacity: 0.55;
+  filter: saturate(0.6);
+  pointer-events: none;
+  transition: opacity 220ms;
+}
+.app.scenario.editing .tbl-section .section-head .ftools { opacity: 0.4; pointer-events: none; }
+
+/* Result mode (after Run) — restore look but keep blue chrome to signal scenario */
+.app.scenario:not(.editing) .intervention::before {
+  content: "Scenario result";
+  position: absolute;
+  top: -1px; left: 14px;
+  background: var(--info);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 0 0 4px 4px;
+  text-transform: uppercase;
+}
+.app.scenario:not(.editing) .intervention { position: relative; }
+
+/* ============ SIM/OPT distinction in KPI strip ============ */
+.kpi-strip .h-meta .src-mark {
+  display: inline-block;
+  padding: 0 4px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  margin: 0 2px;
+  color: var(--fg-3);
+  font-family: var(--font-sans);
+}
+.kpi-strip .h-meta .src-mark.opt {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+.kpi .src-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--fg-4);
+  align-self: center;
+  font-family: var(--font-sans);
+}
+.kpi .src-tag.opt { color: var(--fg-2); }
+.kpi.is-cost .src-tag.opt { color: var(--hi-strong); }
+.kpi-strip.refreshing { opacity: 0.55; transition: opacity 200ms; }
+
+/* ============ Intervention: editable optimisation parameters ============ */
+.opt-params {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--hi-line);
+}
+.op {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-elev);
+  border: 1px solid var(--hi-line);
+  border-radius: var(--r-md);
+  padding: 0 10px;
+  font-size: 12px;
+  height: 30px;
+}
+.op-label {
+  color: var(--hi-strong);
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.op-value {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: var(--fg);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+}
+.op-value:hover { color: var(--accent-hover); }
+.op-file {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--fg-2);
+}
+.op-link {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 11.5px;
+  color: var(--fg-2);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--fg-4);
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.op-link:hover { color: var(--fg); text-decoration-color: var(--fg-3); }
+.btn.op-rerun { margin-left: auto; }
+
+/* ============ Scenario builder: disruption type + time pill ============ */
+.c-type {
+  appearance: none;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-fg);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  text-transform: uppercase;
+}
+.c-type.cap-25 { background: var(--sev-3); border-color: var(--sev-3); }
+.c-type.cap-50 { background: var(--sev-2); border-color: var(--sev-2); }
+.c-type.cap-75 { background: var(--sev-1); border-color: var(--sev-1); color: var(--fg); }
+.c-type:hover { filter: brightness(0.92); }
+
+.c-time-btn {
+  appearance: none;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-2);
+  padding: 2px 7px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.c-time-btn:hover { background: var(--bg-hover); border-color: #c8c8c5; }
+
+.disruption-types {
+  font-size: 11px;
+  color: var(--fg-4);
+  margin-top: 8px;
+}
+.disruption-types strong { color: var(--fg-2); font-weight: 600; }
+
+/* ============ Scenario builder: optimisation parameters block ============ */
+.opt-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 14px;
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+}
+.opt-row { display: flex; flex-direction: column; gap: 4px; }
+.opt-row > label { font-size: 11.5px; font-weight: 500; color: var(--fg-2); }
+.opt-row .help { font-size: 11px; color: var(--fg-4); }
+
+.otp-stepper { display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; }
+.otp-value-btn {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--accent);
+  background: var(--bg-elev);
+  border-radius: var(--r-md);
+  font: inherit;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.otp-value-btn:hover { background: var(--bg-hover); }
+.otp-range { font-size: 11.5px; color: var(--fg-4); }
+
+.scoring-options { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.scoring-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font-size: 12.5px;
+  background: var(--bg-elev);
+  color: var(--fg-2);
+  user-select: none;
+}
+.scoring-opt:hover { background: var(--bg-hover); }
+.scoring-opt.active {
+  border-color: var(--fg);
+  background: var(--bg-sunken);
+  color: var(--fg);
+}
+.scoring-opt .radio-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line-strong);
+  flex-shrink: 0;
+  position: relative;
+  background: var(--bg-elev);
+}
+.scoring-opt.active .radio-dot { border-color: var(--fg); }
+.scoring-opt.active .radio-dot::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--fg);
+  border-radius: 50%;
+}
+.scoring-opt .filename {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--fg-3);
+  margin-left: auto;
+}
+.scoring-opt .upload-link {
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--fg-2);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ====================== TOPBAR ====================== -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">O</div>
+      <span class="brand-name">Orville</span>
+      <span class="brand-sep">·</span>
+      <span class="brand-tenant">Virgin Atlantic</span>
+    </div>
+    <span class="spacer"></span>
+    <div class="seg" role="tablist" aria-label="Horizon">
+      <button>Today</button>
+      <button class="active" aria-selected="true">Tomorrow</button>
+    </div>
+    <span class="spacer"></span>
+    <div class="chips">
+      <span class="chip"><span class="dot"></span>EUROCONTROL · 12s ago</span>
+      <span class="chip">Met Office · 4m ago</span>
+    </div>
+    <button class="btn primary" id="newScenarioBtn">
+      <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg>
+      New scenario
+    </button>
+    <a class="btn ghost icon" href="setup.html" title="Setup">
+      <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2"/><path d="M8 1v2 M8 13v2 M1 8h2 M13 8h2 M3 3l1.5 1.5 M11.5 11.5L13 13 M3 13l1.5-1.5 M11.5 4.5L13 3"/></svg>
+    </a>
+    <button class="btn ghost icon" title="Notifications">
+      <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11V7a4 4 0 018 0v4l1 1H3l1-1z M6.5 13.5a1.5 1.5 0 003 0"/></svg>
+    </button>
+    <div class="avatar">HC</div>
+  </header>
+
+  <!-- ====================== ALERT BANNER ====================== -->
+  <div class="banner" id="banner">
+    <div class="ico-warn">!</div>
+    <span><b>New EUROCONTROL alert</b> · Karlsruhe sectors closure 06:00–11:00 UTC</span>
+    <span class="delta">ΔOTP −8pp · ΔDelay +98 min</span>
+    <span class="spacer"></span>
+    <span class="ts">Updated 18:32 UTC</span>
+    <a href="#" id="driversLink">View drivers →</a>
+  </div>
+
+  <!-- ====================== KPI STRIP ====================== -->
+  <div class="kpi-strip" id="kpiStrip">
+    <div class="kpi-head">
+      <span class="h-title">Tomorrow · 30 May</span>
+      <span class="h-sub">36 flights · 18 affected</span>
+      <span class="h-meta"><span class="src-mark">SIM</span> simulation <span class="arrow">↔</span> <span class="src-mark opt">OPT</span> optimisation</span>
+    </div>
+    <div class="kpi">
+      <span class="label">Expected OTP</span>
+      <div class="vals"><span class="src-tag">SIM</span><span class="v-before">71%</span><span class="arrow">→</span><span class="src-tag opt">OPT</span><span class="v-after">80%</span></div>
+      <span class="delta">+9 pp</span>
+    </div>
+    <div class="kpi">
+      <span class="label">Total delay min</span>
+      <div class="vals"><span class="src-tag">SIM</span><span class="v-before">412</span><span class="arrow">→</span><span class="src-tag opt">OPT</span><span class="v-after">124</span></div>
+      <span class="delta">−288 min</span>
+    </div>
+    <div class="kpi">
+      <span class="label">Curfew misses</span>
+      <div class="vals"><span class="src-tag">SIM</span><span class="v-before">3</span><span class="arrow">→</span><span class="src-tag opt">OPT</span><span class="v-after">0</span></div>
+      <span class="delta">−3 misses</span>
+    </div>
+    <div class="kpi">
+      <span class="label">Diversion risk</span>
+      <div class="vals"><span class="src-tag">SIM</span><span class="v-before">4</span><span class="arrow">→</span><span class="src-tag opt">OPT</span><span class="v-after">1</span></div>
+      <span class="delta">−3 flights</span>
+    </div>
+    <div class="kpi is-cost">
+      <span class="label">Cancellations</span>
+      <div class="vals"><span class="src-tag">SIM</span><span class="v-before">0</span><span class="arrow">→</span><span class="src-tag opt">OPT</span><span class="v-after">8</span></div>
+      <span class="delta">+8 flights — optimisation lever</span>
+    </div>
+  </div>
+
+  <!-- ====================== INTERVENTION CARD ====================== -->
+  <div class="intervention">
+    <div class="body">
+      <span class="label">Optimisation result</span>
+      <h2>Cancel <span class="count" id="nomCount">8 flights</span> · 10:00–14:00 LHR/MAN departures</h2>
+      <div class="sub">
+        Holds 80% OTP target · 0 curfew misses · <span class="pi">80% PI on day OTP = 76–84%</span>
+      </div>
+      <div class="actions">
+        <button class="btn sm">Explain</button>
+        <button class="btn sm" id="driversBtn">Drivers</button>
+        <button class="btn sm" id="nomFilterBtn">Show nominations</button>
+      </div>
+      <div class="opt-params">
+        <div class="op">
+          <span class="op-label">OTP</span>
+          <button class="op-value" id="otpTargetBtn">≥ 80%
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+        </div>
+        <div class="op">
+          <span class="op-label">Scoring</span>
+          <span class="op-file">scores_2026-05-09.csv</span>
+          <button class="op-link" title="Replace scoring file">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h10 M8 3v8 M5 6l3-3 3 3"/></svg>
+            Replace
+          </button>
+        </div>
+        <button class="btn op-rerun primary" id="rerunBtn">
+          <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8a6 6 0 11-1.76-4.24L14 5 M14 2v3h-3"/></svg>
+          Re-run optimisation
+        </button>
+      </div>
+    </div>
+    <div class="cta">
+      <button class="btn primary">
+        Export brief
+        <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </button>
+      <span class="cta-meta">PDF · clipboard · permalink<br>Includes nomination list</span>
+      <span class="cta-meta" style="margin-top:6px; font-style:italic;">Re-run refreshes the OPT column above + the NOM column in the table.</span>
+    </div>
+  </div>
+
+  <!-- ====================== CANVAS ====================== -->
+  <div class="canvas">
+
+    <!-- MAP -->
+    <section class="map-section">
+      <div class="section-head">
+        <h3>Airspace · tomorrow</h3>
+        <span class="count-pill">22 FIRs</span>
+        <span class="spacer" style="flex:1;"></span>
+        <span class="tag live">live</span>
+      </div>
+      <div class="map-wrap">
+        <svg class="map-svg" viewBox="0 0 1000 720" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M40 0 L0 0 0 40" fill="none" stroke="rgba(0,0,0,0.025)" stroke-width="0.5"/>
+            </pattern>
+            <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(28,28,28,0.4)" stroke-width="2"/>
+            </pattern>
+            <radialGradient id="hubGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(10,10,10,0.25)"/>
+              <stop offset="100%" stop-color="rgba(10,10,10,0)"/>
+            </radialGradient>
+            <filter id="planeShadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="0" dy="0.5" stdDeviation="0.6" flood-opacity="0.3"/>
+            </filter>
+          </defs>
+          <rect x="0" y="0" width="1000" height="720" fill="#eceae4"/>
+          <rect x="0" y="0" width="1000" height="720" fill="url(#grid)"/>
+          <g><path class="country" d="M150.0 114.0 L214.3 114.0 L252.4 142.3 L238.1 199.8 L204.8 231.8 L181.0 234.7 L166.7 223.2 L173.8 208.6 L159.5 202.8 L173.8 178.9 L150.0 114.0 Z"/><path class="country" d="M214.3 199.8 L238.1 202.8 L250.0 237.6 L292.9 265.8 L321.4 282.4 L326.2 296.1 L321.4 312.3 L319.0 323.0 L302.4 333.6 L281.0 341.5 L238.1 346.7 L202.4 354.5 L181.0 351.9 L154.8 359.7 L166.7 315.0 L176.2 268.6 L211.9 251.8 L202.4 231.8 L221.4 223.2 L214.3 199.8 Z"/><path class="country" d="M35.7 243.3 L83.3 211.6 L142.9 217.4 L142.9 279.7 L71.4 320.3 L35.7 293.4 L35.7 243.3 Z"/><path class="country" d="M245.2 367.4 L345.2 333.6 L400.0 364.8 L466.7 385.2 L481.0 387.7 L471.4 422.6 L452.4 449.3 L428.6 449.3 L447.6 482.6 L469.0 512.8 L404.8 519.6 L357.1 526.5 L297.6 535.5 L247.6 519.6 L257.1 458.9 L226.2 434.8 L238.1 397.8 L245.2 367.4 Z"/><path class="country" d="M59.5 512.8 L119.0 512.8 L166.7 517.3 L247.6 519.6 L297.6 535.5 L357.1 540.0 L366.7 555.7 L297.6 577.8 L271.4 631.6 L226.2 663.0 L157.1 673.3 L119.0 654.7 L107.1 654.7 L109.5 629.5 L59.5 623.1 L61.9 537.8 L59.5 512.8 Z"/><path class="country" d="M59.5 551.2 L95.2 549.0 L119.0 553.5 L119.0 637.9 L107.1 654.7 L73.8 658.8 L76.2 627.4 L59.5 621.0 L59.5 551.2 Z"/><path class="country" d="M345.2 333.6 L428.6 320.3 L438.1 364.8 L426.2 372.5 L400.0 364.8 L345.2 333.6 Z"/><path class="country" d="M366.7 328.3 L450.0 265.8 L457.1 274.1 L428.6 320.3 L366.7 328.3 Z"/><path class="country" d="M428.6 263.0 L490.5 226.1 L547.6 240.4 L623.8 254.6 L631.0 333.6 L573.8 351.9 L614.3 392.8 L595.2 422.6 L535.7 425.0 L466.7 422.6 L466.7 385.2 L438.1 364.8 L428.6 320.3 L450.0 265.8 L428.6 263.0 Z"/><path class="country" d="M428.6 449.3 L452.4 422.6 L511.9 420.1 L535.7 437.2 L523.8 454.1 L488.1 461.3 L452.4 461.3 L428.6 449.3 Z"/><path class="country" d="M511.9 420.1 L576.2 417.7 L614.3 392.8 L688.1 395.3 L676.2 439.7 L631.0 449.3 L581.0 444.5 L535.7 437.2 L511.9 420.1 Z"/><path class="country" d="M452.4 461.3 L535.7 437.2 L581.0 444.5 L609.5 468.4 L583.3 505.9 L619.0 551.2 L666.7 562.4 L702.4 584.3 L726.2 595.2 L678.6 601.7 L659.5 637.9 L659.5 637.9 L583.3 644.2 L488.1 627.4 L485.7 584.3 L514.3 573.4 L523.8 540.0 L488.1 505.9 L452.4 461.3 Z"/><path class="country" d="M452.4 461.3 L535.7 437.2 L581.0 444.5 L609.5 468.4 L583.3 505.9 L469.0 512.8 L452.4 461.3 Z"/><path class="country" d="M478.6 142.3 L540.5 142.3 L535.7 211.6 L509.5 229.0 L478.6 223.2 L478.6 142.3 Z"/><path class="country" d="M631.0 254.6 L750.0 237.6 L833.3 251.8 L847.6 306.9 L857.1 338.8 L821.4 375.0 L738.1 375.0 L685.7 369.9 L631.0 333.6 L631.0 254.6 Z"/><path class="country" d="M573.8 351.9 L631.0 333.6 L685.7 369.9 L714.3 385.2 L688.1 395.3 L614.3 392.8 L573.8 351.9 Z"/><path class="country" d="M685.7 369.9 L738.1 375.0 L821.4 375.0 L809.5 400.3 L714.3 410.3 L690.5 397.8 L685.7 369.9 Z"/><path class="country" d="M676.2 439.7 L688.1 395.3 L714.3 410.3 L809.5 400.3 L819.0 429.9 L761.9 458.9 L690.5 458.9 L676.2 439.7 Z"/><path class="country" d="M607.1 458.9 L631.0 470.8 L654.8 505.9 L726.2 540.0 L750.0 551.2 L773.8 562.4 L821.4 562.4 L809.5 540.0 L761.9 517.3 L761.9 494.3 L738.1 482.6 L666.7 470.8 L631.0 470.8 L607.1 458.9 Z"/></g>
+          <g><path class="fir" d="M345.2 323.0 L438.1 320.3 L428.6 372.5 L345.2 359.7 Z"/><path class="fir" d="M428.6 320.3 L523.8 312.3 L523.8 397.8 L428.6 397.8 Z"/><path class="fir" d="M523.8 312.3 L595.2 333.6 L607.1 422.6 L523.8 434.8 Z"/><path class="fir" d="M261.9 372.5 L357.1 359.7 L369.0 446.9 L250.0 458.9 Z"/><path class="fir" d="M226.2 446.9 L321.4 446.9 L309.5 528.7 L226.2 528.7 Z"/><path class="fir" d="M357.1 458.9 L464.3 458.9 L464.3 528.7 L369.0 528.7 Z"/><path class="fir" d="M369.0 265.8 L457.1 265.8 L457.1 320.3 L369.0 320.3 Z"/><path class="fir" d="M142.9 223.2 L333.3 223.2 L333.3 359.7 L142.9 359.7 Z"/><path class="fir" d="M35.7 208.6 L154.8 208.6 L154.8 333.6 L35.7 333.6 Z"/><path class="fir" d="M423.8 415.2 L535.7 415.2 L535.7 466.1 L423.8 466.1 Z"/><path class="fir" d="M452.4 470.8 L619.0 470.8 L678.6 584.3 L488.1 595.2 Z"/><path class="fir" d="M452.4 446.9 L571.4 439.7 L583.3 487.3 L452.4 487.3 Z"/><path class="fir" d="M59.5 517.3 L261.9 517.3 L261.9 637.9 L59.5 637.9 Z"/><path class="fir" d="M261.9 517.3 L369.0 517.3 L369.0 637.9 L261.9 637.9 Z"/><path class="fir" d="M464.3 142.3 L642.9 142.3 L642.9 237.6 L464.3 237.6 Z"/><path class="fir" d="M619.0 229.0 L857.1 229.0 L857.1 385.2 L619.0 385.2 Z"/><path class="fir" d="M678.6 369.9 L821.4 369.9 L821.4 420.1 L678.6 420.1 Z"/><path class="fir" d="M571.4 333.6 L726.2 333.6 L726.2 397.8 L571.4 397.8 Z"/><path class="fir" d="M511.9 385.2 L690.5 385.2 L690.5 449.3 L511.9 449.3 Z"/></g>
+          <g><path class="airspace sev-2" d="M345.2 323.0 L438.1 320.3 L428.6 372.5 L345.2 359.7 Z"/><path class="airspace sev-3" d="M428.6 320.3 L523.8 312.3 L523.8 397.8 L428.6 397.8 Z"/><path class="airspace closed" d="M523.8 312.3 L595.2 333.6 L607.1 422.6 L523.8 434.8 Z"/><path class="airspace sev-1" d="M261.9 372.5 L357.1 359.7 L369.0 446.9 L250.0 458.9 Z"/><path class="airspace sev-2" d="M357.1 458.9 L464.3 458.9 L464.3 528.7 L369.0 528.7 Z"/><path class="airspace sev-1" d="M369.0 265.8 L457.1 265.8 L457.1 320.3 L369.0 320.3 Z"/><path class="airspace sev-1" d="M142.9 223.2 L333.3 223.2 L333.3 359.7 L142.9 359.7 Z"/><path class="airspace sev-2" d="M423.8 415.2 L535.7 415.2 L535.7 466.1 L423.8 466.1 Z"/><path class="airspace sev-1" d="M452.4 470.8 L619.0 470.8 L678.6 584.3 L488.1 595.2 Z"/><path class="airspace sev-2" d="M452.4 446.9 L571.4 439.7 L583.3 487.3 L452.4 487.3 Z"/><path class="airspace sev-1" d="M261.9 517.3 L369.0 517.3 L369.0 637.9 L261.9 637.9 Z"/><path class="airspace sev-1" d="M619.0 229.0 L857.1 229.0 L857.1 385.2 L619.0 385.2 Z"/><path class="airspace sev-1" d="M678.6 369.9 L821.4 369.9 L821.4 420.1 L678.6 420.1 Z"/><path class="airspace sev-1" d="M571.4 333.6 L726.2 333.6 L726.2 397.8 L571.4 397.8 Z"/><path class="airspace sev-2" d="M511.9 385.2 L690.5 385.2 L690.5 449.3 L511.9 449.3 Z"/></g>
+          <g><text class="fir-label" x="389.3" y="344">EBBU</text><text class="fir-label" x="476.2" y="358">EDGG</text><text class="fir-label" x="562.5" y="377">EDMM</text><text class="fir-label" x="309.5" y="410">LFFF</text><text class="fir-label" x="270.8" y="488">LFBB</text><text class="fir-label" x="413.7" y="494">LFMM</text><text class="fir-label" x="413.1" y="293">EHAA</text><text class="fir-label" x="238.1" y="293">EGTT</text><text class="fir-label" x="95.2" y="273">EISN</text><text class="fir-label" x="479.8" y="441">LSAS</text><text class="fir-label" x="514.9" y="465">LIMM</text><text class="fir-label" x="160.7" y="579">LECM</text><text class="fir-label" x="315.5" y="579">LECB</text><text class="fir-label" x="553.6" y="191">EKDK</text><text class="fir-label" x="738.1" y="310">EPWW</text><text class="fir-label" x="750" y="395">LZBB</text><text class="fir-label" x="648.8" y="366">LKAA</text><text class="fir-label" x="601.2" y="418">LOVV</text></g>
+          <g><path class="flight-path affected" d="M275.0 321.1 Q426.2 402.1 577.4 555.7"/><path class="flight-path affected" d="M275.0 321.1 Q337.0 294.9 399.0 298.5"/><path class="flight-path affected" d="M231.7 270.0 Q543.7 379.7 855.7 639.2"/><path class="flight-path affected" d="M275.0 321.1 Q565.4 410.5 855.7 639.2"/><path class="flight-path affected" d="M275.0 321.1 Q382.1 346.6 489.3 423.6"/><path class="flight-path affected" d="M231.7 270.0 Q360.5 315.9 489.3 423.6"/><path class="flight-path" d="M275.0 321.1 Q305.1 436.7 335.2 566.8"/><path class="flight-path" d="M275.0 321.1 Q171.7 446.6 68.3 621.6"/></g>
+          <g>
+            <g transform="translate(335.4 338.3) rotate(36)" filter="url(#planeShadow)"><path d="M-4 0 L4 0 M2 -1.5 L4 0 L2 1.5 M-1 -2 L-3 -2 M-1 2 L-3 2" stroke="#d94a3a" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="0" cy="0" r="0.8" fill="#d94a3a"/></g>
+            <g transform="translate(417.1 413.3) rotate(37)" filter="url(#planeShadow)"><path d="M-4 0 L4 0 M2 -1.5 L4 0 L2 1.5 M-1 -2 L-3 -2 M-1 2 L-3 2" stroke="#d94a3a" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="0" cy="0" r="0.8" fill="#d94a3a"/></g>
+            <g transform="translate(314.7 307.4) rotate(-15)" filter="url(#planeShadow)"><path d="M-4 0 L4 0 M2 -1.5 L4 0 L2 1.5 M-1 -2 L-3 -2 M-1 2 L-3 2" stroke="#d94a3a" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="0" cy="0" r="0.8" fill="#d94a3a"/></g>
+            <g transform="translate(308.7 455.1) rotate(76)" filter="url(#planeShadow)"><path d="M-4 0 L4 0 M2 -1.5 L4 0 L2 1.5 M-1 -2 L-3 -2 M-1 2 L-3 2" stroke="#0a0a0a" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="0" cy="0" r="0.8" fill="#0a0a0a"/></g>
+            <g transform="translate(343.2 301.3) rotate(171)" filter="url(#planeShadow)"><path d="M-4 0 L4 0 M2 -1.5 L4 0 L2 1.5 M-1 -2 L-3 -2 M-1 2 L-3 2" stroke="#0a0a0a" stroke-width="1.4" fill="none" stroke-linecap="round"/><circle cx="0" cy="0" r="0.8" fill="#0a0a0a"/></g>
+          </g>
+          <g>
+            <g><circle cx="275" cy="321.1" r="14" fill="url(#hubGlow)"/><circle class="airport hub" cx="275" cy="321.1" r="3.5"/><circle cx="275" cy="321.1" r="3.5" fill="none" stroke="white" stroke-width="1"/><text class="airport-label" x="281" y="324.1">LHR</text></g>
+            <g><circle cx="231.7" cy="270" r="14" fill="url(#hubGlow)"/><circle class="airport hub" cx="231.7" cy="270" r="3.5"/><circle cx="231.7" cy="270" r="3.5" fill="none" stroke="white" stroke-width="1"/><text class="airport-label" x="237.7" y="273">MAN</text></g>
+            <g><circle class="airport" cx="281.4" cy="329.6" r="1.6"/><text class="airport-label" x="285.4" y="332.1" style="font-size: 7px; opacity: 0.7;">LGW</text></g>
+            <g><circle class="airport" cx="346.4" cy="385.2" r="1.6"/><text class="airport-label" x="350.4" y="387.7" style="font-size: 7px; opacity: 0.7;">CDG</text></g>
+            <g><circle class="airport" cx="399" cy="298.5" r="1.6"/><text class="airport-label" x="403" y="301" style="font-size: 7px; opacity: 0.7;">AMS</text></g>
+            <g><circle class="airport" cx="489.5" cy="358.6" r="1.6"/><text class="airport-label" x="493.5" y="361.1" style="font-size: 7px; opacity: 0.7;">FRA</text></g>
+            <g><circle class="airport" cx="335.2" cy="566.8" r="1.6"/><text class="airport-label" x="339.2" y="569.3" style="font-size: 7px; opacity: 0.7;">BCN</text></g>
+            <g><circle class="airport" cx="577.4" cy="555.7" r="1.6"/><text class="airport-label" x="581.4" y="558.2" style="font-size: 7px; opacity: 0.7;">FCO</text></g>
+            <g><circle class="airport" cx="855.7" cy="639.2" r="1.6"/><text class="airport-label" x="859.7" y="641.7" style="font-size: 7px; opacity: 0.7;">ATH</text></g>
+            <g><circle class="airport" cx="489.3" cy="423.6" r="1.6"/><text class="airport-label" x="493.3" y="426.1" style="font-size: 7px; opacity: 0.7;">ZRH</text></g>
+            <g><circle class="airport" cx="566.4" cy="401.5" r="1.6"/><text class="airport-label" x="570.4" y="404" style="font-size: 7px; opacity: 0.7;">MUC</text></g>
+          </g>
+        </svg>
+        <div class="map-legend">
+          <span class="swatch s1">Light</span>
+          <span class="swatch s2">Moderate</span>
+          <span class="swatch s3">Severe</span>
+          <span class="swatch closed">Closed</span>
+        </div>
+        <div class="map-controls">
+          <div class="map-ctl-group">
+            <button title="Zoom in"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 3v10M3 8h10"/></svg></button>
+            <button title="Zoom out"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 8h10"/></svg></button>
+          </div>
+          <div class="map-ctl-group">
+            <button title="Layers"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 2L2 5l6 3 6-3-6-3z M2 8l6 3 6-3 M2 11l6 3 6-3"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLIGHT TABLE -->
+    <section class="tbl-section">
+      <div class="section-head">
+        <h3>Flights</h3>
+        <span class="count-pill">36 · 18 affected · 8 NOM</span>
+        <span class="spacer" style="flex:1;"></span>
+        <span class="ftools">
+          <span class="filter-chip active" id="affectedChip"><span class="dot-on"></span>Affected only</span>
+          <span class="filter-chip" id="nomChip">Nominated</span>
+          <span class="sort-pill">↕ STD</span>
+        </span>
+      </div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Flight</th>
+              <th>Route</th>
+              <th class="num">STD</th>
+              <th class="num">Delay</th>
+              <th class="num">ΔDelay</th>
+              <th class="num">Div</th>
+              <th class="num">Curfew</th>
+              <th class="num">P(d15)</th>
+            </tr>
+          </thead>
+          <tbody id="flightTbody">
+            <!-- Affected + nominated -->
+            <tr class="affected nominated"><td class="nom-cell"><span class="nom-tag">NOM</span></td><td class="flight-id">VS101</td><td>MAN<span class="route-arrow">→</span>FCO</td><td class="num">11:35</td><td class="num delay-cell sev-3">+53</td><td class="num delta-cell cxl">cancel</td><td class="num">21%</td><td class="num">88%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected nominated"><td><span class="nom-tag">NOM</span></td><td class="flight-id">VS105</td><td>LHR<span class="route-arrow">→</span>AMS</td><td class="num">11:07</td><td class="num delay-cell sev-3">+48</td><td class="num delta-cell cxl">cancel</td><td class="num">18%</td><td class="num">92%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected nominated"><td><span class="nom-tag">NOM</span></td><td class="flight-id">VS110</td><td>LHR<span class="route-arrow">→</span>FCO</td><td class="num">09:30</td><td class="num delay-cell sev-3">+32</td><td class="num delta-cell cxl">cancel</td><td class="num">8%</td><td class="num">99%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected nominated"><td><span class="nom-tag">NOM</span></td><td class="flight-id">VS119</td><td>MAN<span class="route-arrow">→</span>ATH</td><td class="num">10:05</td><td class="num delay-cell sev-3">+40</td><td class="num delta-cell cxl">cancel</td><td class="num">12%</td><td class="num">94%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected nominated"><td><span class="nom-tag">NOM</span></td><td class="flight-id">VS121</td><td>LHR<span class="route-arrow">→</span>ZRH</td><td class="num">13:20</td><td class="num delay-cell sev-3">+54</td><td class="num delta-cell cxl">cancel</td><td class="num">11%</td><td class="num">95%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected nominated"><td><span class="nom-tag">NOM</span></td><td class="flight-id">VS123</td><td>LHR<span class="route-arrow">→</span>ZRH</td><td class="num">10:37</td><td class="num delay-cell sev-3">+58</td><td class="num delta-cell cxl">cancel</td><td class="num">14%</td><td class="num">93%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected nominated"><td><span class="nom-tag">NOM</span></td><td class="flight-id">VS126</td><td>MAN<span class="route-arrow">→</span>ATH</td><td class="num">12:37</td><td class="num delay-cell sev-3">+44</td><td class="num delta-cell cxl">cancel</td><td class="num">13%</td><td class="num">94%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected nominated"><td><span class="nom-tag">NOM</span></td><td class="flight-id">VS133</td><td>MAN<span class="route-arrow">→</span>ZRH</td><td class="num">08:07</td><td class="num delay-cell sev-3">+48</td><td class="num delta-cell cxl">cancel</td><td class="num">9%</td><td class="num">98%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <!-- Affected, not nominated -->
+            <tr class="affected"><td></td><td class="flight-id">VS102</td><td>FCO<span class="route-arrow">→</span>MAN</td><td class="num">17:06</td><td class="num delay-cell sev-3">+41</td><td class="num delta-cell">+9</td><td class="num">14%</td><td class="num">90%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS111</td><td>FCO<span class="route-arrow">→</span>LHR</td><td class="num">15:27</td><td class="num delay-cell sev-3">+59</td><td class="num delta-cell">+12</td><td class="num">22%</td><td class="num">85%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS113</td><td>LHR<span class="route-arrow">→</span>DEL</td><td class="num">09:33</td><td class="num delay-cell sev-3">+54</td><td class="num delta-cell">+10</td><td class="num">18%</td><td class="num">88%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS120</td><td>ATH<span class="route-arrow">→</span>MAN</td><td class="num">18:27</td><td class="num delay-cell sev-3">+39</td><td class="num delta-cell">+8</td><td class="num">10%</td><td class="num">95%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS122</td><td>ZRH<span class="route-arrow">→</span>LHR</td><td class="num">18:45</td><td class="num delay-cell sev-3">+38</td><td class="num delta-cell">+8</td><td class="num">9%</td><td class="num">96%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS124</td><td>ZRH<span class="route-arrow">→</span>LHR</td><td class="num">15:01</td><td class="num delay-cell sev-3">+51</td><td class="num delta-cell">+11</td><td class="num">15%</td><td class="num">90%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS127</td><td>ATH<span class="route-arrow">→</span>MAN</td><td class="num">19:54</td><td class="num delay-cell sev-2">+28</td><td class="num delta-cell">+5</td><td class="num">7%</td><td class="num">98%</td><td class="num"><span class="prob bad"><span style="width:90%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS131</td><td>LHR<span class="route-arrow">→</span>ATH</td><td class="num">10:58</td><td class="num delay-cell sev-3">+48</td><td class="num delta-cell">+10</td><td class="num">13%</td><td class="num">92%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS132</td><td>ATH<span class="route-arrow">→</span>LHR</td><td class="num">17:42</td><td class="num delay-cell sev-3">+51</td><td class="num delta-cell">+11</td><td class="num">14%</td><td class="num">91%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <tr class="affected"><td></td><td class="flight-id">VS134</td><td>ZRH<span class="route-arrow">→</span>MAN</td><td class="num">12:32</td><td class="num delay-cell sev-3">+53</td><td class="num delta-cell">+11</td><td class="num">14%</td><td class="num">90%</td><td class="num"><span class="prob bad"><span style="width:97%"></span></span></td></tr>
+            <!-- Unaffected -->
+            <tr><td></td><td class="flight-id">VS103</td><td>LHR<span class="route-arrow">→</span>BCN</td><td class="num">13:25</td><td class="num delay-cell sev-2">+17</td><td class="num delta-cell">+2</td><td class="num">3%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:51%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS104</td><td>BCN<span class="route-arrow">→</span>LHR</td><td class="num">17:53</td><td class="num delay-cell sev-1">+4</td><td class="num delta-cell">0</td><td class="num">1%</td><td class="num">100%</td><td class="num"><span class="prob"><span style="width:17%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS106</td><td>AMS<span class="route-arrow">→</span>LHR</td><td class="num">15:14</td><td class="num delay-cell sev-1">+10</td><td class="num delta-cell">0</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:39%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS107</td><td>MAN<span class="route-arrow">→</span>IAD</td><td class="num">11:15</td><td class="num delay-cell sev-2">+17</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:50%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS108</td><td>LHR<span class="route-arrow">→</span>MIA</td><td class="num">12:20</td><td class="num delay-cell sev-2">+17</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:54%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS109</td><td>LHR<span class="route-arrow">→</span>LOS</td><td class="num">12:23</td><td class="num delay-cell sev-1">+7</td><td class="num delta-cell">0</td><td class="num">1%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:30%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS112</td><td>MAN<span class="route-arrow">→</span>MBJ</td><td class="num">10:27</td><td class="num delay-cell sev-1">+15</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:49%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS114</td><td>LHR<span class="route-arrow">→</span>LIS</td><td class="num">11:07</td><td class="num delay-cell sev-1">+9</td><td class="num delta-cell">0</td><td class="num">1%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:34%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS115</td><td>LIS<span class="route-arrow">→</span>LHR</td><td class="num">17:15</td><td class="num delay-cell sev-1">+15</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:45%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS116</td><td>LHR<span class="route-arrow">→</span>GRU</td><td class="num">11:26</td><td class="num delay-cell sev-1">+13</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:49%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS117</td><td>MAN<span class="route-arrow">→</span>IAD</td><td class="num">10:07</td><td class="num delay-cell sev-1">+6</td><td class="num delta-cell">0</td><td class="num">1%</td><td class="num">100%</td><td class="num"><span class="prob"><span style="width:21%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS118</td><td>MAN<span class="route-arrow">→</span>LAX</td><td class="num">11:37</td><td class="num delay-cell sev-2">+16</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:49%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS125</td><td>LHR<span class="route-arrow">→</span>ATL</td><td class="num">12:56</td><td class="num delay-cell sev-2">+18</td><td class="num delta-cell">+2</td><td class="num">3%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:56%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS128</td><td>LHR<span class="route-arrow">→</span>LAX</td><td class="num">13:36</td><td class="num delay-cell sev-1">+11</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:35%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS129</td><td>MAN<span class="route-arrow">→</span>BOS</td><td class="num">09:35</td><td class="num delay-cell sev-2">+17</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob bad"><span style="width:61%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS130</td><td>LHR<span class="route-arrow">→</span>BOS</td><td class="num">10:16</td><td class="num delay-cell sev-1">+8</td><td class="num delta-cell">0</td><td class="num">1%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:30%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS135</td><td>MAN<span class="route-arrow">→</span>JNB</td><td class="num">12:48</td><td class="num delay-cell sev-1">+5</td><td class="num delta-cell">0</td><td class="num">1%</td><td class="num">100%</td><td class="num"><span class="prob"><span style="width:22%"></span></span></td></tr>
+            <tr><td></td><td class="flight-id">VS136</td><td>LHR<span class="route-arrow">→</span>LAX</td><td class="num">10:05</td><td class="num delay-cell sev-1">+15</td><td class="num delta-cell">+1</td><td class="num">2%</td><td class="num">100%</td><td class="num"><span class="prob warn"><span style="width:53%"></span></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- AGENT RAIL -->
+    <aside class="agent" id="agent">
+      <div class="a-head">
+        <span class="ai-dot"></span>
+        <h3>Ask Orville</h3>
+        <span class="spacer" style="flex:1;"></span>
+        <button class="btn ghost icon" id="agentToggle" title="Collapse">
+          <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l4 5-4 5"/></svg>
+        </button>
+      </div>
+      <div class="body">
+        <div class="suggest-title">Suggested</div>
+        <div class="suggest">
+          <button class="s-chip">Why these 8 nominations?<span class="s-arrow">↗</span></button>
+          <button class="s-chip">What changed since 18:00?<span class="s-arrow">↗</span></button>
+          <button class="s-chip">Summarise tomorrow for the COO<span class="s-arrow">↗</span></button>
+          <button class="s-chip">Show LFFF closure impact<span class="s-arrow">↗</span></button>
+        </div>
+        <div class="suggest-title" style="margin-top:18px;">Per-panel</div>
+        <div class="suggest">
+          <button class="s-chip">Explain VS113's delay forecast<span class="s-arrow">↗</span></button>
+          <button class="s-chip">What drives the 80% PI?<span class="s-arrow">↗</span></button>
+        </div>
+      </div>
+      <div class="input-wrap">
+        <input class="input" placeholder="Ask about a flight, alert, or KPI…">
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+<!-- ====================== SCENARIO DRAWER ====================== -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="d-head">
+    <h2>New scenario</h2>
+    <span class="tag scenario">Hypothetical</span>
+    <span class="spacer" style="flex:1;"></span>
+    <button class="btn ghost icon" id="drawerClose" title="Close">
+      <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>
+    </button>
+  </div>
+  <div class="d-body">
+    <div class="field">
+      <label>Scenario name</label>
+      <input class="input-line" value="LFFF + EDMM disruption" />
+      <span class="help">Used in the brief title.</span>
+    </div>
+    <div class="field">
+      <label>Day</label>
+      <div class="day-toggle">
+        <button>Today (D-0)</button>
+        <button class="on">Tomorrow (D-1)</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Disruptions
+        <span style="float:right; color: var(--fg-4); font-weight:400; font-size:11.5px;">3 disruptions</span>
+      </label>
+      <span class="help">Click an FIR on the map, or draw a polygon. Time pre-fills from latest alert. Type is editable per row.</span>
+      <div class="closures">
+        <div class="closure-row">
+          <span class="c-id">LFFF</span>
+          <span class="c-name">Paris</span>
+          <button class="c-type" title="Change type">Closed
+            <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <button class="c-time-btn" title="Edit time window">06:00–11:00
+            <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <button class="c-x" title="Remove">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>
+          </button>
+        </div>
+        <div class="closure-row">
+          <span class="c-id">EDMM</span>
+          <span class="c-name">München</span>
+          <button class="c-type cap-50" title="Change type">Capacity 50%
+            <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <button class="c-time-btn" title="Edit time window">06:00–11:00
+            <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <button class="c-x" title="Remove">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>
+          </button>
+        </div>
+        <div class="closure-row">
+          <span class="c-id">CUSTOM</span>
+          <span class="c-name">User-drawn</span>
+          <button class="c-type cap-25" title="Change type">Capacity 25%
+            <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <button class="c-time-btn" title="Edit time window">06:00–11:00
+            <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <button class="c-x" title="Remove">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="draw-row">
+        <button class="btn sm">
+          <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-1 7-7-2-2-7 7-1 3z"/></svg>
+          Draw area
+        </button>
+        <button class="btn sm">Clear all</button>
+      </div>
+      <div class="disruption-types">Type options: <strong>Closed</strong> · Capacity 25% · 50% · 75%</div>
+    </div>
+
+    <div class="opt-block">
+      <div class="opt-row">
+        <label>OTP target</label>
+        <span class="help">Main optimisation guide. Range 50–99%.</span>
+        <div class="otp-stepper">
+          <button class="otp-value-btn">≥ 80%
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <span class="otp-range">range 50–99%</span>
+        </div>
+      </div>
+      <div class="opt-row">
+        <label>Scoring (optional override)</label>
+        <span class="help">Sandboxed for this scenario only — does not update Setup.</span>
+        <div class="scoring-options" id="scoringOptions">
+          <div class="scoring-opt active" data-opt="default">
+            <span class="radio-dot"></span>
+            <span>Use default</span>
+            <span class="filename">scores_2026-05-09.csv</span>
+          </div>
+          <div class="scoring-opt" data-opt="override">
+            <span class="radio-dot"></span>
+            <span>Upload scenario-only override</span>
+            <span class="upload-link">↑ Upload</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-foot">
+    <button class="btn" id="drawerCancel">Cancel</button>
+    <button class="btn primary" id="runScenarioBtn">
+      <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3l8 5-8 5V3z"/></svg>
+      Run scenario
+    </button>
+  </div>
+</aside>
+
+<!-- ====================== DRIVERS POPOVER ====================== -->
+<div class="scrim" id="scrimDrivers"></div>
+<div class="drivers" id="drivers" aria-hidden="true">
+  <div class="d-head">
+    <h2>Forecast drivers</h2>
+    <span class="tag live">live</span>
+    <span class="spacer" style="flex:1;"></span>
+    <button class="btn ghost icon" id="driversClose" title="Close">
+      <svg class="icn" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg>
+    </button>
+  </div>
+  <div class="d-body">
+    <div class="driver-card">
+      <div class="src">EUROCONTROL · NOP-2026-0530-EDMM-CAP · 18:32 UTC</div>
+      <div class="text">EDMM ACC sectors S1, S5, S7 capacity reduced to 50% from 06:00 to 11:00 UTC due to ATC staffing shortage. Expect en-route delays for traffic transiting EDMM east-bound; ground delay programs may be activated for affected origins.</div>
+    </div>
+    <div class="driver-card">
+      <div class="src">EUROCONTROL · NOP-2026-0530-LFFF-CLS · 17:55 UTC</div>
+      <div class="text">LFFF Paris ACC area closed 06:00–11:00 UTC for industrial action. Reroutes published. All traffic must avoid sector LFFFCTA1.</div>
+    </div>
+    <div class="driver-card">
+      <div class="src">Met Office · TAF EDDF · 17:00 UTC</div>
+      <div class="text">EDDF 290600Z 2906/3012 28012KT 9999 SCT040 BKN080 BECMG 2910/2913 26022G35KT TSRA BKN025CB</div>
+    </div>
+    <div style="font-size: 11.5px; color: var(--fg-3); margin-top: 14px; line-height: 1.5;">
+      <strong style="color:var(--fg-2);">Sim assumptions:</strong> WB→NB spacing 90 s; cruise speed per fleet type; behaviour at capacity limit: 60% delay-on-ground, 30% reroute, 10% divert. Iterated to convergence over 200 trials.
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ App-wide elements ============
+const app = document.getElementById('app');
+const banner = document.getElementById('banner');
+const scrim = document.getElementById('scrim');
+const drawer = document.getElementById('drawer');
+const newScenarioBtn = document.getElementById('newScenarioBtn');
+const drawerClose = document.getElementById('drawerClose');
+const drawerCancel = document.getElementById('drawerCancel');
+const runScenarioBtn = document.getElementById('runScenarioBtn');
+
+// Save originals so we can restore on exit
+const originalBannerHTML = banner.innerHTML;
+const originalNewScenarioBtnHTML = newScenarioBtn.innerHTML;
+
+// ============ Drivers popover ============
+const scrimDrivers = document.getElementById('scrimDrivers');
+const drivers = document.getElementById('drivers');
+const driversBtn = document.getElementById('driversBtn');
+const driversClose = document.getElementById('driversClose');
+function openDrivers(e) {
+  if (e) e.preventDefault();
+  scrimDrivers.classList.add('open');
+  drivers.classList.add('open');
+  drivers.setAttribute('aria-hidden','false');
+}
+function closeDrivers() {
+  scrimDrivers.classList.remove('open');
+  drivers.classList.remove('open');
+  drivers.setAttribute('aria-hidden','true');
+}
+driversBtn.addEventListener('click', openDrivers);
+driversClose.addEventListener('click', closeDrivers);
+scrimDrivers.addEventListener('click', closeDrivers);
+
+// ============ Drawer open/close primitives ============
+function openDrawer() {
+  scrim.classList.add('open');
+  drawer.classList.add('open');
+  drawer.setAttribute('aria-hidden', 'false');
+}
+function closeDrawer() {
+  scrim.classList.remove('open');
+  drawer.classList.remove('open');
+  drawer.setAttribute('aria-hidden', 'true');
+}
+
+// ============ Banner / topbar state setters ============
+function setBannerLive() {
+  banner.innerHTML = originalBannerHTML;
+  // re-attach drivers link handler (since innerHTML wiped it)
+  const link = document.getElementById('driversLink');
+  if (link) link.addEventListener('click', openDrivers);
+}
+
+function setBannerEditing(name, count) {
+  banner.innerHTML = `
+    <div class="ico-warn">
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l3-1 7-7-2-2-7 7-1 3z"/></svg>
+    </div>
+    <span><b>Building scenario:</b> ${name} · ${count} disruption${count===1?'':'s'}</span>
+    <span class="spacer"></span>
+    <span class="ts">Tomorrow · D-1</span>
+    <a href="#" id="cancelScenarioBannerLink">Cancel scenario →</a>
+  `;
+  document.getElementById('cancelScenarioBannerLink').addEventListener('click', e => {
+    e.preventDefault();
+    cancelScenario();
+  });
+}
+
+function setBannerResult(name, count) {
+  banner.innerHTML = `
+    <div class="ico-warn">
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3 3 7-7"/></svg>
+    </div>
+    <span><b>Scenario:</b> ${name}</span>
+    <span class="delta">Run complete · ${count} disruption${count===1?'':'s'}</span>
+    <span class="spacer"></span>
+    <span class="ts">Tomorrow · D-1</span>
+    <a href="#" id="backToLiveLink">← back to live forecast</a>
+  `;
+  document.getElementById('backToLiveLink').addEventListener('click', e => {
+    e.preventDefault();
+    backToLive();
+  });
+}
+
+function setNewScenarioActive(active) {
+  if (active) {
+    newScenarioBtn.classList.add('active-scenario');
+    newScenarioBtn.innerHTML = '<span class="dot-led"></span>Building scenario';
+  } else {
+    newScenarioBtn.classList.remove('active-scenario');
+    newScenarioBtn.innerHTML = originalNewScenarioBtnHTML;
+  }
+}
+
+// ============ Scenario state machine ============
+function currentScenarioName() {
+  const input = drawer.querySelector('.input-line');
+  return (input && input.value.trim()) || 'Untitled scenario';
+}
+function currentDisruptionCount() {
+  return drawer.querySelectorAll('.closure-row').length;
+}
+
+function enterScenarioMode() {
+  app.classList.add('scenario', 'editing');
+  setNewScenarioActive(true);
+  setBannerEditing(currentScenarioName(), currentDisruptionCount());
+  openDrawer();
+}
+
+function cancelScenario() {
+  closeDrawer();
+  app.classList.remove('scenario', 'editing');
+  setNewScenarioActive(false);
+  setBannerLive();
+}
+
+function runScenario() {
+  app.classList.remove('editing');
+  // app retains 'scenario' class for the result view
+  setBannerResult(currentScenarioName(), currentDisruptionCount());
+  closeDrawer();
+  // brief KPI strip flash to signal recompute
+  const strip = document.getElementById('kpiStrip');
+  strip.classList.add('refreshing');
+  setTimeout(() => strip.classList.remove('refreshing'), 700);
+}
+
+function backToLive() {
+  app.classList.remove('scenario', 'editing');
+  setNewScenarioActive(false);
+  setBannerLive();
+}
+
+// Wire scenario controls
+newScenarioBtn.addEventListener('click', enterScenarioMode);
+drawerClose.addEventListener('click', cancelScenario);
+drawerCancel.addEventListener('click', cancelScenario);
+scrim.addEventListener('click', cancelScenario);
+runScenarioBtn.addEventListener('click', runScenario);
+
+// Initial drivers link handler (banner is in live state at load)
+document.getElementById('driversLink').addEventListener('click', openDrivers);
+
+// ============ Agent rail collapse ============
+const agent = document.getElementById('agent');
+document.getElementById('agentToggle').addEventListener('click', () => {
+  agent.classList.toggle('collapsed');
+});
+
+// ============ Filter chips (visual toggle) ============
+['affectedChip','nomChip'].forEach(id => {
+  document.getElementById(id).addEventListener('click', e => {
+    e.currentTarget.classList.toggle('active');
+  });
+});
+
+// ============ Highlight nominations from intervention ============
+document.getElementById('nomCount').addEventListener('click', () => {
+  document.getElementById('nomChip').classList.add('active');
+  document.getElementById('affectedChip').classList.remove('active');
+  document.querySelector('tr.nominated').scrollIntoView({behavior:'smooth', block:'start'});
+});
+document.getElementById('nomFilterBtn').addEventListener('click', () => {
+  document.getElementById('nomChip').classList.toggle('active');
+});
+
+// ============ Re-run optimisation — visual feedback ============
+document.getElementById('rerunBtn').addEventListener('click', () => {
+  const strip = document.getElementById('kpiStrip');
+  strip.classList.add('refreshing');
+  setTimeout(() => strip.classList.remove('refreshing'), 700);
+});
+
+// ============ Scenario builder: scoring radio ============
+document.querySelectorAll('#scoringOptions .scoring-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('#scoringOptions .scoring-opt').forEach(o => o.classList.remove('active'));
+    opt.classList.add('active');
+  });
+});
+
+// ============ ESC handler ============
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (drawer.classList.contains('open')) {
+      cancelScenario();
+    }
+    closeDrivers();
+  }
+});
+</script>
+
+</body>
+</html>
